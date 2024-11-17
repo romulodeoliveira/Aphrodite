@@ -1,0 +1,6 @@
+@Aphrodite.Api_HostAddress = http://localhost:5288
+
+GET {{Aphrodite.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
