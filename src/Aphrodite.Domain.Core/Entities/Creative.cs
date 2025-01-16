@@ -38,9 +38,10 @@ public class Creative : BaseEntity
     public Byte[] ImageOrVideo { get; private set; }
     public IReadOnlyCollection<Comment> Comments => _comments.ToArray();
 
-    public void MarkAsApproved()
+    public void MarkAsApproved(Comment comment)
     {
         IsApproved = true;
+        AddComment(comment);
     }
     
     public void UpdateTitle(string newTitle)
@@ -69,5 +70,11 @@ public class Creative : BaseEntity
     public void AddComment(Comment comment)
     {
         _comments.Add(comment);
+    }
+
+    public void UpdateImageOrVideo(byte[] newImageOrVideo, Comment comment)
+    {
+        ImageOrVideo = newImageOrVideo;
+        AddComment(comment);
     }
 }
