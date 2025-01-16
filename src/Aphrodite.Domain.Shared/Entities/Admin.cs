@@ -7,16 +7,11 @@ public class Admin : BaseUser
         string lastName, 
         string email, 
         DateOnly birthDate, 
-        DateTime createdDate, 
-        DateTime? lastModified, 
         bool isActive) : base(
             firstName, 
             lastName, 
             email, 
-            birthDate, 
-            createdDate, 
-            lastModified, 
-            isActive)
+            birthDate)
     {
     }
 }

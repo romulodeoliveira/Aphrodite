@@ -1,6 +1,8 @@
+using Flunt.Notifications;
+
 namespace Aphrodite.Domain.Shared.Entities;
 
-public abstract class BaseEntity
+public abstract class BaseEntity : Notifiable<Notification>
 {
     public BaseEntity()
     {
