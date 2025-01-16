@@ -1,3 +1,4 @@
+using Aphrodite.Domain.Core.Enums;
 using Aphrodite.Domain.Shared.Entities;
 
 namespace Aphrodite.Domain.Core.Entities;
@@ -11,7 +12,8 @@ public class Creative : BaseEntity
         string description, 
         DateTime postingDate,
         Admin creator, 
-        Customer customer, 
+        Customer customer,
+        ETypeOfPost typeOfPost,
         Byte[] imageOrVideo)
     {
         Title = title;
@@ -22,6 +24,7 @@ public class Creative : BaseEntity
         CreatedAt = DateTime.Now;
         Creator = creator;
         Customer = customer;
+        TypeOfPost = typeOfPost;
         ImageOrVideo = imageOrVideo;
         _comments = new List<Comment>();
     }
@@ -35,6 +38,7 @@ public class Creative : BaseEntity
     public DateTime? ModifiedAt { get; private set; }
     public Admin Creator { get; private set; }
     public Customer Customer { get; private set; }
+    public ETypeOfPost TypeOfPost { get; private set; }
     public Byte[] ImageOrVideo { get; private set; }
     public IReadOnlyCollection<Comment> Comments => _comments.ToArray();
 
@@ -76,5 +80,10 @@ public class Creative : BaseEntity
     {
         ImageOrVideo = newImageOrVideo;
         AddComment(comment);
+    }
+
+    public void UpdateTypeOfPost(ETypeOfPost newTypeOfPost)
+    {
+        TypeOfPost = newTypeOfPost;
     }
 }
