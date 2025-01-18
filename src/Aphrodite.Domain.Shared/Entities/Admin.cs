@@ -1,15 +1,14 @@
+using Aphrodite.Domain.Shared.ValueObjects;
+
 namespace Aphrodite.Domain.Shared.Entities;
 
 public class Admin : BaseUser
 {
     public Admin(
-        string firstName, 
-        string lastName, 
-        string email, 
-        DateOnly birthDate, 
-        bool isActive) : base(
-            firstName, 
-            lastName, 
+        Name name, 
+        Email email, 
+        DateOnly birthDate) : base(
+            name, 
             email, 
             birthDate)
     {
