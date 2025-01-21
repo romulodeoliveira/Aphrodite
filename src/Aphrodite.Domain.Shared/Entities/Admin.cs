@@ -6,11 +6,9 @@ public class Admin : BaseUser
 {
     public Admin(
         Name name, 
-        Email email, 
-        DateOnly birthDate) : base(
+        Email email) : base(
             name, 
-            email, 
-            birthDate)
+            email)
     {
     }
 }

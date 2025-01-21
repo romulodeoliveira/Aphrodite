@@ -8,11 +8,9 @@ public class Customer : BaseUser
     public Customer(
         Name name, 
         Email email, 
-        DateOnly birthDate, 
         Document document) : base(
             name, 
-            email, 
-            birthDate)
+            email)
     {
         Document = document;
 

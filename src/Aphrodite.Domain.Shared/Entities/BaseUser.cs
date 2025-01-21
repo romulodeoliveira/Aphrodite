@@ -7,12 +7,10 @@ public abstract class BaseUser : BaseEntity
 {
     protected BaseUser(
         Name name,
-        Email email, 
-        DateOnly birthDate)
+        Email email)
     {
         Name = name;
         Email = email;
-        BirthDate = birthDate;
         CreatedDate = DateTime.Now;
         
         AddNotifications(
@@ -20,7 +18,6 @@ public abstract class BaseUser : BaseEntity
                 .Requires()
                 .IsNotNull(name, "Name", "O nome não pode estar em branco.")
                 .IsNotNull(email, "Email", "O e-mail não pode estar em branco.")
-                .IsLowerOrEqualsThan(birthDate.ToDateTime(TimeOnly.MinValue), DateTime.Now, "BirthDate", "A data de nascimento deve ser no passado")
             );
     }
 
