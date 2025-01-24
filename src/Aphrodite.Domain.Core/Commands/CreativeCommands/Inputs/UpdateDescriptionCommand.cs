@@ -1,6 +1,14 @@
+using Aphrodite.Domain.Shared.Commands.Interfaces;
+using Flunt.Notifications;
+
 namespace Aphrodite.Domain.Core.Commands.CreativeCommands.Inputs;
 
-public class UpdateDescriptionCommand
+public class UpdateDescriptionCommand : Notifiable<Notification>, ICommand
 {
     public string Description { get; set; }
+    
+    public bool Valid()
+    {
+        throw new NotImplementedException();
+    }
 }

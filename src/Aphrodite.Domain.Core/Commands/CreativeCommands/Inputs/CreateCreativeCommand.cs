@@ -1,10 +1,12 @@
 using Aphrodite.Domain.Core.Entities;
 using Aphrodite.Domain.Core.Enums;
+using Aphrodite.Domain.Shared.Commands.Interfaces;
 using Aphrodite.Domain.Shared.Enums;
+using Flunt.Notifications;
 
 namespace Aphrodite.Domain.Core.Commands.CreativeCommands.Inputs;
 
-public class CreateCreativeCommand
+public class CreateCreativeCommand : Notifiable<Notification>, ICommand
 {
     public string Title { get; set; }
     public string Description { get; set; }
@@ -19,4 +21,9 @@ public class CreateCreativeCommand
     public EDocumentType Type { get; set; }
     public ETypeOfPost TypeOfPost { get; set; }
     public Byte[] File { get; set; }
+    
+    public bool Valid()
+    {
+        throw new NotImplementedException();
+    }
 }
