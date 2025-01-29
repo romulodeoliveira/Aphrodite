@@ -1,6 +1,8 @@
 using Aphrodite.Domain.Core.Commands.CreativeCommands.Inputs;
 using Aphrodite.Domain.Core.Commands.CreativeCommands.Outputs;
 using Aphrodite.Domain.Core.Entities;
+using Aphrodite.Domain.Core.Repositories;
+using Aphrodite.Domain.Core.Services;
 using Aphrodite.Domain.Shared.Commands.Interfaces;
 using Aphrodite.Domain.Shared.Entities;
 using Aphrodite.Domain.Shared.ValueObjects;
@@ -18,10 +20,19 @@ public class CreativeHandler :
     ICommandHandler<UpdateTitleCommand>,
     ICommandHandler<UpdateTypeOfPostCommand>
 {
+    private readonly ICreativeRepository _repository;
+    private readonly IEmailService _emailService;
+    
+    public CreativeHandler(
+        ICreativeRepository repository, 
+        IEmailService emailService)
+    {
+        _repository = repository;
+        _emailService = emailService;
+    }
+    
     public ICommandResult Handle(CreateCreativeCommand command)
     {
-        // verificar se o e-mail já existe na base
-        
         // Criar VOs
         var adminName = new Name(
             command.AdminFirstName, 
@@ -45,7 +56,7 @@ public class CreativeHandler :
             customerEmail, 
             customerDocument);
         
-        // Criar a Entidade 
+        // Criar a Entidade
         var creative = new Creative(
             command.Title, 
             command.Description, 
@@ -58,10 +69,21 @@ public class CreativeHandler :
         // Validar entidades e VOs
         AddNotifications(adminName.Notifications);
         AddNotifications(adminEmail.Notifications);
+
+        if (IsValid == false)
+        {
+            return null;
+        }
         
         // Persistir o Criativo
+        _repository.Save(creative);
         
         // Enviar notificação via e-mail para o cliente
+        _emailService.Send(
+            customerEmail.Address, 
+            adminEmail.Address, 
+            "Nova Notificação", 
+            "Você possui um novo criativo pendente de aprovação.");
         
         // Enviar notificação via Whatsapp para o cliente
         
