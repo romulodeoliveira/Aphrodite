@@ -1,5 +1,6 @@
 using Aphrodite.Domain.Shared.Commands.Interfaces;
 using Flunt.Notifications;
+using Flunt.Validations;
 
 namespace Aphrodite.Domain.CoreContext.Commands.CommentCommands.Inputs;
 
@@ -10,6 +11,12 @@ public class CreateCommentCommand : Notifiable<Notification>, ICommand
     
     public bool Valid()
     {
-        throw new NotImplementedException();
+        AddNotifications(new Contract<CreateCommentCommand>()
+            .Requires()
+            .IsNotNullOrEmpty(AuthorId.ToString(), "AuthorId", "O ID do autor é obrigatório.")
+            .IsFalse(AuthorId == Guid.Empty, "AuthorId", "O ID do autor é inválido.")
+        );
+
+        return IsValid;
     }
 }
