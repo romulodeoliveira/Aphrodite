@@ -9,6 +9,7 @@ namespace Aphrodite.Domain.CoreContext.Entities;
 public class Creative : BaseEntity
 {
     private readonly IList<Comment> _comments;
+    private readonly IList<File> _files;
     
     public Creative(
         string title, 
@@ -16,8 +17,7 @@ public class Creative : BaseEntity
         DateTime postingDate,
         Admin creator, 
         Customer customer,
-        ETypeOfPost typeOfPost,
-        Byte[] file)
+        ETypeOfPost typeOfPost)
     {
         Title = title;
         Description = description;
@@ -28,7 +28,7 @@ public class Creative : BaseEntity
         Creator = creator;
         Customer = customer;
         TypeOfPost = typeOfPost;
-        File = file;
+        _files = new List<File>();
         _comments = new List<Comment>();
         
         AddNotifications(
@@ -43,8 +43,6 @@ public class Creative : BaseEntity
                 .IsNotNull(creator, "Admin", "O campo 'criador' não pode estar vazio.")
                 .IsNotNull(customer, "Customer", "O campo 'cliente' não pode estar vazio.")
                 .IsTrue(Enum.IsDefined(typeof(ETypeOfPost), typeOfPost), "TypeOfPost", "O tipo de post fornecido é inválido")
-                .IsTrue(FileValidator.IsSupportedImageOrVideo(file), "File", "São aceitos apenas arquivos do tipo '.mp4', '.mov', '.jpg', 'jpeg' e '.png'.")
-                .IsNotNull(file, "File", "O arquivo de imagem ou vídeo não pode estar vazio.")
             );
     }
 
@@ -58,7 +56,7 @@ public class Creative : BaseEntity
     public Admin Creator { get; private set; }
     public Customer Customer { get; private set; }
     public ETypeOfPost TypeOfPost { get; private set; }
-    public Byte[] File { get; private set; }
+    public IReadOnlyCollection<File> File { get; private set; }
     public IReadOnlyCollection<Comment> Comments => _comments.ToArray();
 
     public void MarkAsApproved(Comment comment)
@@ -121,19 +119,6 @@ public class Creative : BaseEntity
         {
             AddNotifications(comment.Notifications);
         }
-    }
-
-    public void UpdateImageOrVideo(byte[] newFile, Comment comment)
-    {
-        File = newFile;
-        AddComment(comment);
-        
-        AddNotifications(
-            new Contract<Creative>()
-                .Requires()
-                .IsTrue(FileValidator.IsSupportedImageOrVideo(newFile), "File", "São aceitos apenas arquivos do tipo '.mp4', '.mov', '.jpg', 'jpeg' e '.png'.")
-                .IsNotNull(newFile, "File", "O arquivo de imagem ou vídeo não pode estar vazio.")
-        );
     }
 
     public void UpdateTypeOfPost(ETypeOfPost newTypeOfPost)

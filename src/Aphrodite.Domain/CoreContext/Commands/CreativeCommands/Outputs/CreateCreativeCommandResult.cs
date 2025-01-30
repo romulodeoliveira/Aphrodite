@@ -21,8 +21,7 @@ public class CreateCreativeCommandResult : ICommandResult
         string customerEmailAddress, 
         string customerDocumentNumber, 
         EDocumentType type, 
-        ETypeOfPost typeOfPost, 
-        byte[] file)
+        ETypeOfPost typeOfPost)
     {
         Id = id;
         Title = title;
@@ -37,7 +36,6 @@ public class CreateCreativeCommandResult : ICommandResult
         CustomerDocumentNumber = customerDocumentNumber;
         Type = type;
         TypeOfPost = typeOfPost;
-        File = file;
     }
 
     public Guid Id { get; set; }

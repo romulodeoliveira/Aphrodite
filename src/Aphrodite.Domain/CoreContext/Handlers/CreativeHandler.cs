@@ -15,7 +15,6 @@ public class CreativeHandler :
     ICommandHandler<CreateCreativeCommand>,
     ICommandHandler<AddCommentCommand>,
     ICommandHandler<UpdateDescriptionCommand>,
-    ICommandHandler<UpdateImageOrVideoCommand>,
     ICommandHandler<UpdatePostingDateCommand>,
     ICommandHandler<UpdateTitleCommand>,
     ICommandHandler<UpdateTypeOfPostCommand>
@@ -63,8 +62,7 @@ public class CreativeHandler :
             command.PostingDate, 
             admin, 
             customer, 
-            command.TypeOfPost, 
-            command.File);
+            command.TypeOfPost);
         
         // Validar entidades e VOs
         AddNotifications(adminName.Notifications);
@@ -101,8 +99,7 @@ public class CreativeHandler :
             customerEmail.Address, 
             customerDocument.Number, 
             customerDocument.Type, 
-            creative.TypeOfPost, 
-            creative.File);
+            creative.TypeOfPost);
     }
 
     public ICommandResult Handle(AddCommentCommand command)
@@ -111,11 +108,6 @@ public class CreativeHandler :
     }
 
     public ICommandResult Handle(UpdateDescriptionCommand command)
-    {
-        throw new NotImplementedException();
-    }
-
-    public ICommandResult Handle(UpdateImageOrVideoCommand command)
     {
         throw new NotImplementedException();
     }

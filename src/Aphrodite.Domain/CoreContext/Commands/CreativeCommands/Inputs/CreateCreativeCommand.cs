@@ -19,7 +19,6 @@ public class CreateCreativeCommand : Notifiable<Notification>, ICommand
     public string CustomerDocumentNumber { get; set; }
     public EDocumentType Type { get; set; }
     public ETypeOfPost TypeOfPost { get; set; }
-    public Byte[] File { get; set; }
     
     public bool Valid()
     {
