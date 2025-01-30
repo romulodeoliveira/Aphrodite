@@ -2,6 +2,7 @@ using Aphrodite.Domain.CoreContext.Enums;
 using Aphrodite.Domain.Shared.Commands.Interfaces;
 using Aphrodite.Domain.UserContext.Enums;
 using Flunt.Notifications;
+using Flunt.Validations;
 
 namespace Aphrodite.Domain.CoreContext.Commands.CreativeCommands.Inputs;
 
@@ -22,6 +23,10 @@ public class CreateCreativeCommand : Notifiable<Notification>, ICommand
     
     public bool Valid()
     {
-        throw new NotImplementedException();
+        AddNotifications(new Contract<CreateCreativeCommand>()
+            .Requires()
+        );
+
+        return IsValid;
     }
 }

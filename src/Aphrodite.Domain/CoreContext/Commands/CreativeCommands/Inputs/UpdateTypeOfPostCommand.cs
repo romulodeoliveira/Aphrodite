@@ -1,6 +1,7 @@
 using Aphrodite.Domain.CoreContext.Enums;
 using Aphrodite.Domain.Shared.Commands.Interfaces;
 using Flunt.Notifications;
+using Flunt.Validations;
 
 namespace Aphrodite.Domain.CoreContext.Commands.CreativeCommands.Inputs;
 
@@ -10,6 +11,10 @@ public class UpdateTypeOfPostCommand : Notifiable<Notification>, ICommand
     
     public bool Valid()
     {
-        throw new NotImplementedException();
+        AddNotifications(new Contract<UpdateTypeOfPostCommand>()
+            .Requires()
+        );
+
+        return IsValid;
     }
 }
