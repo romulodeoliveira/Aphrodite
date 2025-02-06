@@ -6,8 +6,14 @@ namespace Aphrodite.Domain.CoreContext.Commands.CommentCommands.Inputs;
 
 public class CreateCommentCommand : Notifiable<Notification>, ICommand
 {
-    public string Content { get; private set; }
-    public Guid AuthorId { get; private set; }
+    public CreateCommentCommand(string content, Guid authorId)
+    {
+        Content = content;
+        AuthorId = authorId;
+    }
+
+    public string Content { get; set; }
+    public Guid AuthorId { get; set; }
     
     public bool Valid()
     {

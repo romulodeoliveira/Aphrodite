@@ -11,13 +11,8 @@ public class CreateCreativeCommand : Notifiable<Notification>, ICommand
     public string Title { get; set; }
     public string Description { get; set; }
     public DateTime PostingDate { get; set; }
-    public string AdminFirstName { get; set; }
-    public string AdminLastName { get; set; }
-    public string AdminEmailAddress { get; set; }
-    public string CustomerFirstName { get; set; }
-    public string CustomerLastName { get; set; }
-    public string CustomerEmailAddress { get; set; }
-    public string CustomerDocumentNumber { get; set; }
+    public Guid AdminId { get; set; }
+    public Guid CustomerId { get; set; }
     public EDocumentType Type { get; set; }
     public ETypeOfPost TypeOfPost { get; set; }
     
@@ -25,6 +20,10 @@ public class CreateCreativeCommand : Notifiable<Notification>, ICommand
     {
         AddNotifications(new Contract<CreateCreativeCommand>()
             .Requires()
+            .IsNotNullOrEmpty(AdminId.ToString(), "AdminId", "O ID do admin é obrigatório.")
+            .IsFalse(AdminId == Guid.Empty, "AdminId", "O ID do admin é inválido.")
+            .IsNotNullOrEmpty(CustomerId.ToString(), "CustomerId", "O ID do cliente é obrigatório.")
+            .IsFalse(CustomerId == Guid.Empty, "CustomerId", "O ID do cliente é inválido.")
         );
 
         return IsValid;

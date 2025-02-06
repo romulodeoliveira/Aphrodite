@@ -8,9 +8,6 @@ namespace Aphrodite.Domain.CoreContext.Entities;
 
 public class Creative : BaseEntity
 {
-    private readonly IList<Comment> _comments;
-    private readonly IList<File> _files;
-    
     public Creative(
         string title, 
         string description, 
@@ -28,8 +25,6 @@ public class Creative : BaseEntity
         Creator = creator;
         Customer = customer;
         TypeOfPost = typeOfPost;
-        _files = new List<File>();
-        _comments = new List<Comment>();
         
         AddNotifications(
             new Contract<Creative>()
@@ -56,13 +51,10 @@ public class Creative : BaseEntity
     public Admin Creator { get; private set; }
     public Customer Customer { get; private set; }
     public ETypeOfPost TypeOfPost { get; private set; }
-    public IReadOnlyCollection<File> File { get; private set; }
-    public IReadOnlyCollection<Comment> Comments => _comments.ToArray();
 
-    public void MarkAsApproved(Comment comment)
+    public void MarkAsApproved()
     {
         IsApproved = true;
-        AddComment(comment);
     }
     
     public void UpdateTitle(string newTitle)
@@ -107,18 +99,6 @@ public class Creative : BaseEntity
     public void MarkAsScheduled()
     {
         IsScheduled = true;
-    }
-
-    public void AddComment(Comment comment)
-    {
-        if (comment.IsValid)
-        {
-            _comments.Add(comment);
-        }
-        else
-        {
-            AddNotifications(comment.Notifications);
-        }
     }
 
     public void UpdateTypeOfPost(ETypeOfPost newTypeOfPost)
